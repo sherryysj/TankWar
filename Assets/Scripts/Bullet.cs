@@ -6,6 +6,8 @@ public class Bullet : MonoBehaviour
 {
     public float moveSpeed = 10;
 
+    public bool isPlayerBullet;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,17 +32,24 @@ public class Bullet : MonoBehaviour
                 Destroy(gameObject);
                 break;
             case "Enemy":
+                // call enemy Die
                 Destroy(gameObject);
                 break;
             case "Player":
-                Destroy(gameObject);
+                if (!isPlayerBullet)
+                {
+                    collision.SendMessage("Die");
+                    Destroy(gameObject);
+                }
                 break;
             case "King":
-                Destroy(collision.gameObject);
+                collision.SendMessage("Die");
                 Destroy(gameObject);
                 break;
             default:
                 break;
         }
+
+
     }
 }

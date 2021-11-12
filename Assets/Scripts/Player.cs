@@ -7,12 +7,20 @@ public class Player : MonoBehaviour
 
     // player variables
     public float moveSpeed = 3;
+    public bool isProtected;
     private Vector3 bulletEulerAngles;
     private float attackTimer = 0.4f;
+    private float protectTimer = 3f;
 
     // player tank artwork reference
     private SpriteRenderer sr;
     public Sprite[] tankSprite; // up, right, down, left
+
+    // player tank effect reference
+    public GameObject explosionEffect;
+    public GameObject shieldEffect;
+
+    // player bullet reference
     public GameObject bulletPrefab;
 
     private void Awake()
@@ -35,6 +43,24 @@ public class Player : MonoBehaviour
         {
             attackTimer += Time.deltaTime;
         }
+
+        if (isProtected) 
+        {
+            shieldEffect.SetActive(true);
+            if (protectTimer > 0)
+            {
+                protectTimer -= Time.deltaTime;
+            }
+            else
+            {
+                isProtected = false;
+                shieldEffect.SetActive(false);
+                protectTimer = 3f;
+            }
+        }
+
+        
+
     }
 
     // Use fixed update to avoid player shaking problem
@@ -93,6 +119,16 @@ public class Player : MonoBehaviour
         {
             Instantiate(bulletPrefab, transform.position, Quaternion.Euler(transform.eulerAngles+bulletEulerAngles));
             attackTimer = 0;
+        }
+    }
+
+    // Player die
+    public void Die()
+    {
+        if (!isProtected)
+        {
+            Instantiate(explosionEffect, transform.position, transform.rotation);
+            Destroy(gameObject);
         }
     }
 
