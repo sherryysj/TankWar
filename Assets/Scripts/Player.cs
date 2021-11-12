@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     // player variables
     public float moveSpeed = 3;
     private Vector3 bulletEulerAngles;
+    private float attackTimer = 0.4f;
 
     // player tank artwork reference
     private SpriteRenderer sr;
@@ -26,7 +27,14 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        Attack();
+        // Control player attack interval
+        if (attackTimer >= 0.4f)
+        {
+            Attack();
+        } else
+        {
+            attackTimer += Time.deltaTime;
+        }
     }
 
     // Use fixed update to avoid player shaking problem
@@ -77,14 +85,15 @@ public class Player : MonoBehaviour
         }
     }
 
-
+    // Player attack
     private void Attack()
     {
         // generate bullet and rotate its direction according to player direction if player presses SPACE
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log("Give me a bullet");
             Instantiate(bulletPrefab, transform.position, Quaternion.Euler(transform.eulerAngles+bulletEulerAngles));
+            attackTimer = 0;
         }
     }
+
 }
