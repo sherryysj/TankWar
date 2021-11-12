@@ -103,6 +103,7 @@ MonoBehaviour:
   - {fileID: 21300016, guid: c3a4b3c783ddce7438622efbc82d5538, type: 3}
   - {fileID: 21300032, guid: c3a4b3c783ddce7438622efbc82d5538, type: 3}
   - {fileID: 21300048, guid: c3a4b3c783ddce7438622efbc82d5538, type: 3}
+  bulletPrefab: {fileID: 5453887401513783056, guid: af73f9426f7267a4daa9ff218ec48932, type: 3}
 --- !u!61 &-9204620764959889920
 BoxCollider2D:
   m_ObjectHideFlags: 0
