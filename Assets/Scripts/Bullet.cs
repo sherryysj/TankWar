@@ -32,8 +32,11 @@ public class Bullet : MonoBehaviour
                 Destroy(gameObject);
                 break;
             case "Enemy":
-                // call enemy Die
-                Destroy(gameObject);
+                if (isPlayerBullet)
+                {
+                    collision.SendMessage("BeAttacked");
+                    Destroy(gameObject);
+                }
                 break;
             case "Player":
                 if (!isPlayerBullet)

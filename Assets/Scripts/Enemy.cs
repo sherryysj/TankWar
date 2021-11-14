@@ -7,11 +7,8 @@ public class Enemy : MonoBehaviour
     // enemy variable
     public float moveSpeed = 3;
     private Vector3 bulletEulerAngles;
-    private float attackTimer = 0.4f;
-
-    // enemy tank artwork reference
-    private SpriteRenderer sr;
-    public Sprite[] tankSprite; // up, right, down, left
+    private float attackTimer = 0;
+    public int health;
 
     // enemy tank effect reference
     public GameObject explosionEffect;
@@ -21,12 +18,12 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        sr = GetComponent<SpriteRenderer>();
+        Debug.Log("Enemy Health: " + health);
     }
 
     void Update()
     {
-        if (attackTimer >= 0.4f)
+        if (attackTimer >= 1f)
         {
             // update to auto attack
             Attack();
@@ -54,12 +51,12 @@ public class Enemy : MonoBehaviour
         // art work: change sprite to show player face which direction when play turn direction horizontally
         if (h < 0)
         {
-            sr.sprite = tankSprite[3]; //use Euler to update the sprite
+            transform.eulerAngles = new Vector3(0, 0, 90); // need to test the value
             bulletEulerAngles = new Vector3(0, 0, 90);
         }
         else if (h > 0)
         {
-            sr.sprite = tankSprite[1];
+            transform.eulerAngles = new Vector3(0, 0, -90);
             bulletEulerAngles = new Vector3(0, 0, -90);
         }
 
@@ -76,12 +73,12 @@ public class Enemy : MonoBehaviour
         // art work: change sprite to show player face which direction when play turn direction vertically
         if (v < 0)
         {
-            sr.sprite = tankSprite[2];
+            transform.eulerAngles = new Vector3(0, 0, -180);
             bulletEulerAngles = new Vector3(0, 0, -180);
         }
         else if (v > 0)
         {
-            sr.sprite = tankSprite[0];
+            transform.eulerAngles = new Vector3(0, 0, 0);
             bulletEulerAngles = new Vector3(0, 0, 0);
         }
     }
@@ -90,9 +87,19 @@ public class Enemy : MonoBehaviour
     private void Attack()
     {
         // generate bullet and rotate its direction
+        Debug.Log("Call Attack");
         Instantiate(bulletPrefab, transform.position, Quaternion.Euler(transform.eulerAngles + bulletEulerAngles));
         attackTimer = 0;
+    }
 
+    // enemy is attacked
+    public void BeAttacked()
+    {
+        health -= 1;
+        if (health == 0)
+        {
+            Die();
+        }
     }
 
     // enemy die
