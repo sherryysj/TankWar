@@ -123,6 +123,7 @@ public class Enemy : MonoBehaviour
     {
         Instantiate(explosionEffect, transform.position, transform.rotation);
         Destroy(gameObject);
+        PlayerManager.Instance.PlayerScore += 1;
     }
 
     // enemy will change direction if collide with the other enmey and airwall

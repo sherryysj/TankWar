@@ -129,6 +129,7 @@ public class Player : MonoBehaviour
         {
             Instantiate(explosionEffect, transform.position, transform.rotation);
             Destroy(gameObject);
+            PlayerManager.Instance.Recover();
         }
     }
 
