@@ -6,9 +6,11 @@ public class Enemy : MonoBehaviour
 {
     // enemy variable
     public float moveSpeed = 3;
-    private Vector3 bulletEulerAngles;
     private float attackTimer = 0;
     public int health;
+    private string moveDirection = "h";
+    private float directionTimer = 4f;
+    private string[] moveDirections;
 
     // enemy tank effect reference
     public GameObject explosionEffect;
@@ -19,76 +21,71 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         Debug.Log("Enemy Health: " + health);
+        moveDirections = new string[4] { "up", "down", "left", "right" };
     }
 
     void Update()
     {
+        // call enemy attack automatically every second
         if (attackTimer >= 1f)
         {
-            // update to auto attack
             Attack();
         }
         else
         {
             attackTimer += Time.deltaTime;
         }
+
+        // change enemy direction automatically every three second
+        if (directionTimer > 3f)
+        {
+            int num = Random.Range(0, 4);
+            moveDirection = moveDirections[num];
+            directionTimer = 0;
+        } else
+        {
+            directionTimer += Time.deltaTime;
+        }
     }
 
     // Use fixed update to avoid enemy shaking problem
     private void FixedUpdate()
     {
-        // update to auto move
         Move();
     }
 
-    // enemy move
+    // enemy auto move
     private void Move()
     {
-        // play horizontal move
-        float h = Input.GetAxisRaw("Horizontal");
-        transform.Translate(Vector3.right * h * moveSpeed * Time.fixedDeltaTime, Space.World);
 
-        // art work: change sprite to show player face which direction when play turn direction horizontally
-        if (h < 0)
+        if (moveDirection == "up")
         {
-            transform.eulerAngles = new Vector3(0, 0, 90); // need to test the value
-            bulletEulerAngles = new Vector3(0, 0, 90);
-        }
-        else if (h > 0)
-        {
-            transform.eulerAngles = new Vector3(0, 0, -90);
-            bulletEulerAngles = new Vector3(0, 0, -90);
-        }
-
-        // restrict player use both horizontal and vertical key at the same time to control the player
-        if (h != 0)
-        {
-            return;
-        }
-
-        // play vertical move
-        float v = Input.GetAxisRaw("Vertical");
-        transform.Translate(Vector3.up * v * moveSpeed * Time.fixedDeltaTime, Space.World);
-
-        // art work: change sprite to show player face which direction when play turn direction vertically
-        if (v < 0)
-        {
-            transform.eulerAngles = new Vector3(0, 0, -180);
-            bulletEulerAngles = new Vector3(0, 0, -180);
-        }
-        else if (v > 0)
-        {
+            transform.Translate(Vector3.up * 1 * moveSpeed * Time.fixedDeltaTime, Space.World);
+            // art work: change sprite to show enemy face which direction when turn directions
             transform.eulerAngles = new Vector3(0, 0, 0);
-            bulletEulerAngles = new Vector3(0, 0, 0);
+
+        } else if (moveDirection == "down")
+        {
+            transform.Translate(Vector3.up * -1 * moveSpeed * Time.fixedDeltaTime, Space.World);
+            transform.eulerAngles = new Vector3(0, 0, -180);
+
+        } else if (moveDirection == "left")
+        {
+            transform.Translate(Vector3.right * -1 * moveSpeed * Time.fixedDeltaTime, Space.World);
+            transform.eulerAngles = new Vector3(0, 0, 90); 
+        } else
+        {
+            transform.Translate(Vector3.right * 1 * moveSpeed * Time.fixedDeltaTime, Space.World);
+            transform.eulerAngles = new Vector3(0, 0, -90);
         }
+
     }
 
     // enemy attack
     private void Attack()
     {
-        // generate bullet and rotate its direction
-        Debug.Log("Call Attack");
-        Instantiate(bulletPrefab, transform.position, Quaternion.Euler(transform.eulerAngles + bulletEulerAngles));
+        // generate bullet and rotate its direction according to enemy direction
+        Instantiate(bulletPrefab, transform.position, Quaternion.Euler(transform.eulerAngles));
         attackTimer = 0;
     }
 
