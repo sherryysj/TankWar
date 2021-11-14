@@ -5,11 +5,11 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     // enemy variable
-    public float moveSpeed = 3;
-    private float attackTimer = 0;
+    public float moveSpeed;
+    private float attackTimer = 1f;
     public int health;
-    private string moveDirection = "h";
-    private float directionTimer = 4f;
+    private string moveDirection = "down";
+    private float directionTimer = 1f;
     private string[] moveDirections;
 
     // enemy tank effect reference
@@ -40,10 +40,7 @@ public class Enemy : MonoBehaviour
         // change enemy direction automatically every three second
         if (directionTimer > 3f)
         {
-            // down/right/left directions has more possibility to make enemy more likely to go to the king
-            int num = Random.Range(0, 8);
-            moveDirection = moveDirections[num];
-            directionTimer = 0;
+            changeDirection();
         } else
         {
             directionTimer += Time.deltaTime;
@@ -54,6 +51,16 @@ public class Enemy : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
+    }
+
+
+    private void changeDirection()
+    {
+        // down/right/left directions has more possibility to make enemy more likely to go to the king
+        int num = Random.Range(0, 8);
+        Debug.Log(moveDirections[num]);
+        moveDirection = moveDirections[num];
+        directionTimer = 0;
     }
 
     // enemy auto move
@@ -92,7 +99,7 @@ public class Enemy : MonoBehaviour
     }
 
     // enemy is attacked
-    public void BeAttacked()
+    private void BeAttacked()
     {
         health -= 1;
 
@@ -112,9 +119,19 @@ public class Enemy : MonoBehaviour
     }
 
     // enemy die
-    public void Die()
+    private void Die()
     {
         Instantiate(explosionEffect, transform.position, transform.rotation);
         Destroy(gameObject);
+    }
+
+    // enemy will change direction if collide with the other enmey and airwall
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "AirWall")
+        {
+            Debug.Log("i AM WORKING");
+            changeDirection();
+        }
     }
 }

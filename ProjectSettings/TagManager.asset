@@ -8,6 +8,7 @@ TagManager:
   - SteelWall
   - King
   - Enemy
+  - AirWall
   layers:
   - Default
   - TransparentFX
