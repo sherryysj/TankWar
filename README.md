@@ -1,2 +1,2 @@
 # TankWar
- Tank War Game Practice of Sherry, NON-COMMERCIAL USE
+ Battle City Code Practice of Sherry, NON-COMMERCIAL USE
