@@ -123,7 +123,7 @@ public class Player : MonoBehaviour
     }
 
     // Player die
-    public void Die()
+    private void Die()
     {
         if (!isProtected)
         {

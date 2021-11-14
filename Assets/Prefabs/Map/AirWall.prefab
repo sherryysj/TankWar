@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 631079798676467391}
   m_Layer: 0
   m_Name: AirWall
-  m_TagString: SteelWall
+  m_TagString: AirWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

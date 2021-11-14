@@ -49,6 +49,9 @@ public class Bullet : MonoBehaviour
                 collision.SendMessage("Die");
                 Destroy(gameObject);
                 break;
+            case "AirWall":
+                Destroy(gameObject);
+                break;
             default:
                 break;
         }

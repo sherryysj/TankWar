@@ -83,26 +83,44 @@ public class MapCreator : MonoBehaviour
             // for the two line same as king and king protect, only generate item outside the king and player born site
             if (y <= -7)
             {
-                itemAmount = Random.Range(4, 14);
+                itemAmount = Random.Range(1, 13);
                 for (int x = -3; x <= 3; x++)
                 {
                     usedX.Add(x);
                 }
+            // for the line under enemy born position, not generate item around the enemy born position to avoid enemy not move
+            }
+            else if (y == 7)
+            {
+                itemAmount = Random.Range(5, 13);
+                Debug.Log("Item Num: " + itemAmount);
+                for (int x = -3; x <= 3; x++)
+                {
+                    usedX.Add(-10);
+                    usedX.Add(-9);
+                    usedX.Add(10);
+                    usedX.Add(9);
+                    usedX.Add(0);
+                    usedX.Add(-1);
+                    usedX.Add(1);
+                }
             } else
             {
-                itemAmount = Random.Range(4, 20);
+                itemAmount = Random.Range(2, 16);
             }
 
             for (int i = 0; i < itemAmount; i++)
             {
-                // random generate X position for an item
-                int x = Random.Range(-10, 11);
-                if (!usedX.Contains(x))
-                {
-                    int itemNumber = Random.Range(1, 5);
-                    Instantiate(mapItemPrefabs[itemNumber], new Vector3(x, y, 0), Quaternion.identity, transform);
-                    usedX.Add(x);
-                }
+                // random generate X position for an item and if the position has item, find another one
+                int x;
+                do { 
+                    x = Random.Range(-10, 11); 
+                } while (usedX.Contains(x));
+
+                int itemNumber = Random.Range(1, 5);
+                Instantiate(mapItemPrefabs[itemNumber], new Vector3(x, y, 0), Quaternion.identity, transform);
+                usedX.Add(x);
+                
             } 
         }
 
