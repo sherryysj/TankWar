@@ -35,6 +35,12 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance.IsKingDead)
+        {
+            Instantiate(explosionEffect, transform.position, transform.rotation);
+            Destroy(gameObject);
+        }
+
         // Control player attack interval
         if (attackTimer >= 0.4f)
         {
@@ -59,7 +65,6 @@ public class Player : MonoBehaviour
             }
         }
 
-        
 
     }
 
@@ -117,7 +122,7 @@ public class Player : MonoBehaviour
         // generate bullet and rotate its direction according to player direction if player presses SPACE
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Instantiate(bulletPrefab, transform.position, Quaternion.Euler(transform.eulerAngles+bulletEulerAngles));
+            Instantiate(bulletPrefab, transform.position, Quaternion.Euler(transform.eulerAngles+bulletEulerAngles), transform);
             attackTimer = 0;
         }
     }
@@ -129,7 +134,7 @@ public class Player : MonoBehaviour
         {
             Instantiate(explosionEffect, transform.position, transform.rotation);
             Destroy(gameObject);
-            PlayerManager.Instance.Recover();
+            GameManager.Instance.Recover();
         }
     }
 

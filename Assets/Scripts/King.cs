@@ -26,6 +26,7 @@ public class King : MonoBehaviour
             Instantiate(explosionEffect, transform.position, transform.rotation);
             sr.sprite = deadSprite;
             isDead = true;
+            GameManager.Instance.IsKingDead = true;
         }
 
         //Game Over

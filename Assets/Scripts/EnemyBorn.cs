@@ -16,13 +16,13 @@ public class EnemyBorn : MonoBehaviour
         int tankRate = Random.Range(1, 100);
         if (tankRate <= 60)
         {
-            Instantiate(enemyPrefab[0], transform.position, Quaternion.identity);
+            Instantiate(enemyPrefab[0], transform.position, Quaternion.identity, GameManager.Instance.CurrentRound.transform);
         } else if (tankRate <= 90)
         {
-            Instantiate(enemyPrefab[1], transform.position, Quaternion.identity);
+            Instantiate(enemyPrefab[1], transform.position, Quaternion.identity, GameManager.Instance.CurrentRound.transform);
         } else
         {
-            Instantiate(enemyPrefab[2], transform.position, Quaternion.identity);
+            Instantiate(enemyPrefab[2], transform.position, Quaternion.identity, GameManager.Instance.CurrentRound.transform);
         }
         Destroy(gameObject);
     }
