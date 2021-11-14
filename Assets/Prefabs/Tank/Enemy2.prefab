@@ -148,3 +148,7 @@ MonoBehaviour:
   health: 2
   explosionEffect: {fileID: 7340168614298702931, guid: 8c5d4304e0f63d344aa9c110fa9285f8, type: 3}
   bulletPrefab: {fileID: 1368925182398532521, guid: 9f23170dc80c6dc4ea5281170498bc53, type: 3}
+  enemyPrefabs:
+  - {fileID: 1071230173664411656, guid: de215b6b42ae18740a1891cbac05bddb, type: 3}
+  - {fileID: 4042403707465306044}
+  - {fileID: 3111745011912200141, guid: 42790f0d3f2ecff4c8e8b59b726cc204, type: 3}

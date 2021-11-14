@@ -15,13 +15,14 @@ public class Enemy : MonoBehaviour
     // enemy tank effect reference
     public GameObject explosionEffect;
 
-    // enemy bullet reference
+    // enemy bullet and tank reference
     public GameObject bulletPrefab;
+    public GameObject[] enemyPrefabs;
 
     void Start()
     {
         Debug.Log("Enemy Health: " + health);
-        moveDirections = new string[4] { "up", "down", "left", "right" };
+        moveDirections = new string[8] { "up", "down", "left", "left", "right", "right", "down", "down" };
     }
 
     void Update()
@@ -39,7 +40,8 @@ public class Enemy : MonoBehaviour
         // change enemy direction automatically every three second
         if (directionTimer > 3f)
         {
-            int num = Random.Range(0, 4);
+            // down/right/left directions has more possibility to make enemy more likely to go to the king
+            int num = Random.Range(0, 8);
             moveDirection = moveDirections[num];
             directionTimer = 0;
         } else
@@ -93,7 +95,17 @@ public class Enemy : MonoBehaviour
     public void BeAttacked()
     {
         health -= 1;
-        if (health == 0)
+
+        // change enemy type according to enemy health and call die if health is 0
+        if (health == 2)
+        {
+            Instantiate(enemyPrefabs[1], transform.position, transform.rotation);
+            Destroy(gameObject);
+        } else if (health == 1)
+        {
+            Instantiate(enemyPrefabs[0], transform.position, transform.rotation);
+            Destroy(gameObject);
+        } else if (health == 0)
         {
             Die();
         }
