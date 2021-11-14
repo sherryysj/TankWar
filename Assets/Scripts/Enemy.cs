@@ -5,8 +5,8 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     // enemy variable
-    public float moveSpeed = 3;
-    private float attackTimer = 0;
+    public float moveSpeed;
+    private float attackTimer = 1f;
     public int health;
     private string moveDirection = "h";
     private float directionTimer = 4f;
