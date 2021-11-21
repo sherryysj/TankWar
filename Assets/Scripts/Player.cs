@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     private Vector3 bulletEulerAngles;
     private float attackTimer = 0.4f;
     private float protectTimer = 3f;
+    
 
     // player tank artwork reference
     private SpriteRenderer sr;
@@ -23,15 +24,18 @@ public class Player : MonoBehaviour
     // player bullet reference
     public GameObject bulletPrefab;
 
+    // player audio reference
+    public AudioClip tankMoveSound;
+    public AudioClip tankIdleSound;
+    public AudioSource moveAudio;
+    public AudioClip playerDie;
+
     private void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
+        moveAudio.clip = tankIdleSound;
     }
 
-    void Start()
-    {
-
-    }
 
     void Update()
     {
@@ -114,6 +118,24 @@ public class Player : MonoBehaviour
             sr.sprite = tankSprite[0];
             bulletEulerAngles = new Vector3(0, 0, 0);
         }
+
+        if ( h==0 && v==0)
+        {
+            moveAudio.clip = tankIdleSound;
+            if (!moveAudio.isPlaying)
+            {
+                moveAudio.Play();
+            }
+        }
+        else
+        {
+            moveAudio.clip = tankMoveSound;
+            if (!moveAudio.isPlaying)
+            {
+                moveAudio.Play();
+            }
+        }
+
     }
 
     // Player attack
@@ -122,6 +144,7 @@ public class Player : MonoBehaviour
         // generate bullet and rotate its direction according to player direction if player presses SPACE
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            // there is a bug to attach bullet to player as mother object, if the player move, bullet will change angles
             Instantiate(bulletPrefab, transform.position, Quaternion.Euler(transform.eulerAngles+bulletEulerAngles), transform);
             attackTimer = 0;
         }
@@ -132,7 +155,8 @@ public class Player : MonoBehaviour
     {
         if (!isProtected)
         {
-            Instantiate(explosionEffect, transform.position, transform.rotation);
+            moveAudio.Stop();
+            AudioSource.PlayClipAtPoint(playerDie, transform.position);
             Destroy(gameObject);
             GameManager.Instance.Recover();
         }

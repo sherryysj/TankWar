@@ -8,13 +8,9 @@ public class Bullet : MonoBehaviour
 
     public bool isPlayerBullet;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    // bullet Audio reference
+    public AudioClip wallDestroy;
 
-    // Update is called once per frame
     void Update()
     {
         transform.Translate(transform.up * moveSpeed * Time.deltaTime, Space.World);
@@ -25,6 +21,10 @@ public class Bullet : MonoBehaviour
         switch (collision.tag)
         {
             case "StoneWall":
+                if (isPlayerBullet)
+                {
+                    AudioSource.PlayClipAtPoint(wallDestroy, transform.position);
+                }
                 Destroy(collision.gameObject);
                 Destroy(gameObject);
                 break;

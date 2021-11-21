@@ -99,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 10
   isPlayerBullet: 0
+  wallDestroy: {fileID: 8300000, guid: a36f2278a85dfc8458b569c2b95bacb6, type: 3}
 --- !u!61 &6242892753621547587
 BoxCollider2D:
   m_ObjectHideFlags: 0

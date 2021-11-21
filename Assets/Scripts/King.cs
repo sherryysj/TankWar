@@ -14,6 +14,9 @@ public class King : MonoBehaviour
     // King effect reference
     public GameObject explosionEffect;
 
+    // King Audio reference
+    public AudioClip kingDie;
+
     private void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
@@ -23,7 +26,7 @@ public class King : MonoBehaviour
     {
         if (!isDead)
         {
-            Instantiate(explosionEffect, transform.position, transform.rotation);
+            AudioSource.PlayClipAtPoint(kingDie, transform.position);
             sr.sprite = deadSprite;
             isDead = true;
             GameManager.Instance.IsKingDead = true;
