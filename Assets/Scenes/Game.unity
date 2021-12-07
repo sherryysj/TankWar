@@ -815,8 +815,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerLives: 2
-  roundAmount: 2
-  enemyAmount: 2
+  roundAmount: 10
+  enemyAmount: 10
   playerBornPrefab: {fileID: 1416361737485873379, guid: 06848bccaabcaeb46b0a972853205c98, type: 3}
   mapCreatorPrefab: {fileID: 4790106920874284340, guid: 15202f10e889c9e42b7f8ba9f14c36f0, type: 3}
   playerLivesText: {fileID: 1960550020}
