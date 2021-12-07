@@ -1,6 +1,8 @@
 # TankWar
  Battle City Code Practice of Sherry.Y, NON-COMMERCIAL USE
  
+ For release Version 1.0, download the game file and unzip it, click Tankwar in the main folder to start play the game
+ 
  Home Page: Click 1 PLAYER OR 2 PLAYERS to start game (But there is only one player mode for now)
  
  Control: Keys ADWS for move, SPACE for attack
