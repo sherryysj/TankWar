@@ -13,7 +13,7 @@ public class Born : MonoBehaviour
 
     private void TankBorn()
     {
-        Instantiate(playerPrefab, transform.position, Quaternion.identity);
+        Instantiate(playerPrefab, transform.position, Quaternion.identity, GameManager.Instance.CurrentRound.transform);
         Destroy(gameObject);
     }
 }

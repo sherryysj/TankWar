@@ -94,7 +94,7 @@ public class Enemy : MonoBehaviour
     private void Attack()
     {
         // generate bullet and rotate its direction according to enemy direction
-        Instantiate(bulletPrefab, transform.position, Quaternion.Euler(transform.eulerAngles));
+        Instantiate(bulletPrefab, transform.position, Quaternion.Euler(transform.eulerAngles), transform);
         attackTimer = 0;
     }
 
@@ -123,6 +123,8 @@ public class Enemy : MonoBehaviour
     {
         Instantiate(explosionEffect, transform.position, transform.rotation);
         Destroy(gameObject);
+        GameManager.Instance.PlayerScore += 1;
+        GameManager.Instance.EnemyKilled += 1;
     }
 
     // enemy will change direction if collide with the other enmey and airwall

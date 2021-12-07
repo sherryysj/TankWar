@@ -10,10 +10,10 @@ public class MapCreator : MonoBehaviour
     public GameObject[] mapItemPrefabs;
 
     // map variable
-    public int enemyAmount;
     private int enemyGenerated = 0;
     private float enemyBornTimer = 5f;
     private int[] enemyBornLocationX;
+
 
     void Awake()
     {
@@ -27,7 +27,7 @@ public class MapCreator : MonoBehaviour
     void Update()
     {
         // call generate enemy every 5 second if enemy generated not reach the highest amount
-        if (enemyGenerated < enemyAmount)
+        if (enemyGenerated < GameManager.Instance.enemyAmount)
         {
             if (enemyBornTimer >= 5f)
             {
@@ -46,7 +46,7 @@ public class MapCreator : MonoBehaviour
     // generate player at game start
     private void GeneratePlayer()
     {
-        Instantiate(mapItemPrefabs[6], new Vector3(-2, -8, 0), Quaternion.identity);
+        Instantiate(mapItemPrefabs[6], new Vector3(-2, -8, 0), Quaternion.identity, transform);
     }
 
     // generate enemy tank
